@@ -25,12 +25,17 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
      * Product IDs to use in query when returning which subscriptions to update
      * @var array
      */
-    $product_ids = array( '27371', '27370', '27369' );
+    public $product_ids = array( '27371', '27370', '27369' );
+    
+    public function __construct() {
+      add_action( 'admin_enqueue_scripts', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'enqueue_admin_scripts' ) );
+      add_action( 'init', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'hook_up_ajax' ) );
+    }
 
     /**
      * Load in JS for admin screen
      */
-    function enqueue_admin_scripts() {
+    public function enqueue_admin_scripts() {
     	global $current_screen;
     	if ( 'tools_page_action-scheduler' === $current_screen->id ) {
     		wp_enqueue_script( 'churnly-update-existing-subs', plugins_url( '/js/update-events.js', __FILE__ ), array( 'jquery' ), '0.1', true );
@@ -40,21 +45,19 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
     		) );
     	}
     }
-    add_action( 'admin_enqueue_scripts', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'enqueue_admin_scripts' ) );
 
     /**
      * Hook in AJAX requests
      */
-    function hook_up_ajax() {
+    public function hook_up_ajax() {
     	add_action( 'wp_ajax_get_subscriptions', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'get_subscriptions' ) );
     	add_action( 'wp_ajax_update_churnly_events', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'update_events_for_churnly' ) );
     }
-    add_action( 'init', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'hook_up_ajax' ) );
 
     /**
      * Get all active subscriptions for the given product IDs
      */
-    function get_subscriptions() {
+    public function get_subscriptions() {
     	global $wpdb;
       $product_ids   = implode( ',', $this->product_ids );
     	$subscriptions = $wpdb->get_col( "
@@ -73,7 +76,7 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
     /**
      * Add card expiration events for existing subscriptions
      */
-    function update_events_for_churnly() {
+    public function update_events_for_churnly() {
     	$subs      = $_POST['subscriptions'];
     	$churnly   = new \Churnly\Integration\WooCommerce;
     	$completed = array( 'processed_subscriptions' => array() );
