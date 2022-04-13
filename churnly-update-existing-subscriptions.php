@@ -28,8 +28,8 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
     public $product_ids = array( '27371', '27370', '27369' );
     
     public function __construct() {
-      add_action( 'admin_enqueue_scripts', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'enqueue_admin_scripts' ) );
-      add_action( 'init', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'hook_up_ajax' ) );
+      add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+      add_action( 'init', array( $this, 'hook_up_ajax' ) );
     }
 
     /**
@@ -50,8 +50,8 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
      * Hook in AJAX requests
      */
     public function hook_up_ajax() {
-    	add_action( 'wp_ajax_get_subscriptions', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'get_subscriptions' ) );
-    	add_action( 'wp_ajax_update_churnly_events', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'update_events_for_churnly' ) );
+    	add_action( 'wp_ajax_get_subscriptions', array( $this, 'get_subscriptions' ) );
+    	add_action( 'wp_ajax_update_churnly_events', array( $this, 'update_events_for_churnly' ) );
     }
 
     /**
