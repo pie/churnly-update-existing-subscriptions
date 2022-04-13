@@ -9,13 +9,13 @@ License:     GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
 
-/* Pie\ChurnlyUpdateExistingSubs as Default is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or any later version.
+/* PIE\ChurnlyUpdateExistingSubs is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or any later version.
 
-Pie\ChurnlyUpdateExistingSubs as Default is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+PIE\ChurnlyUpdateExistingSubs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Pie\ChurnlyUpdateExistingSubs as Default. If not, see https://www.gnu.org/licenses/gpl-3.0.en.html */
+You should have received a copy of the GNU General Public License along with PIE\ChurnlyUpdateExistingSubs. If not, see https://www.gnu.org/licenses/gpl-3.0.en.html */
 
-namespace Pie\ChurnlyUpdateExistingSubs;
+namespace PIE\ChurnlyUpdateExistingSubs;
 
 if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
 
@@ -40,16 +40,16 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
     		) );
     	}
     }
-    add_action( 'admin_enqueue_scripts', 'Pie\ChurnlyUpdateExistingSubs\enqueue_admin_scripts' );
+    add_action( 'admin_enqueue_scripts', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'enqueue_admin_scripts' ) );
 
     /**
      * Hook in AJAX requests
      */
     function hook_up_ajax() {
-    	add_action( 'wp_ajax_get_subscriptions', 'Pie\ChurnlyUpdateExistingSubs\get_subscriptions' );
-    	add_action( 'wp_ajax_update_churnly_events', 'Pie\ChurnlyUpdateExistingSubs\update_events_for_churnly' );
+    	add_action( 'wp_ajax_get_subscriptions', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'get_subscriptions' ) );
+    	add_action( 'wp_ajax_update_churnly_events', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'update_events_for_churnly' ) );
     }
-    add_action( 'init', 'Pie\ChurnlyUpdateExistingSubs\hook_up_ajax' );
+    add_action( 'init', array( 'PIE\ChurnlyUpdateExistingSubs\Churnly_Update_Existing_Subs', 'hook_up_ajax' ) );
 
     /**
      * Get all active subscriptions for the given product IDs
