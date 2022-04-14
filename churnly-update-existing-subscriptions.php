@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Churnly Update Existing Subscriptions
+Plugin Name: Churnly: Update Existing Subscriptions
 Description: Adds JS script for adding scheduled events for existing subscriptions
 Version: 0.1
 Author: The team at PIE
@@ -39,7 +39,7 @@ if ( ! class_exists( 'Churnly_Update_Existing_Subs' ) ) {
     	global $current_screen;
     	if ( 'tools_page_action-scheduler' === $current_screen->id ) {
     		wp_enqueue_script( 'churnly-update-existing-subs', plugins_url( '/js/update-events.js', __FILE__ ), array( 'jquery' ), '0.1', true );
-    		wp_localize_script( 'churnly-update-existing-subs', 'churnly_fix_data', array(
+    		wp_localize_script( 'churnly-update-existing-subs', 'churnly_update_existing_subs', array(
     			'import_button_text' => __( 'Update Churnly Events', 'churnly-update-existing-subs' ),
     			'importing_text'     => __( 'Updating...', 'churnly-update-existing-subs' ),
     		) );
